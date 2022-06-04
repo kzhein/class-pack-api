@@ -1,5 +1,6 @@
 import { Body, Controller, Get, Post, UseGuards } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
+import { AdminGuard } from 'src/auth/admin.guard';
 import { ClassPack } from './classpack.entity';
 import { ClasspacksService } from './classpacks.service';
 import { CreateClassPackDto } from './dto/create-classpack.dto';
@@ -15,6 +16,7 @@ export class ClasspacksController {
   }
 
   @Post()
+  @UseGuards(AdminGuard)
   createClassPack(
     @Body() createClassPackDto: CreateClassPackDto,
   ): Promise<ClassPack> {
