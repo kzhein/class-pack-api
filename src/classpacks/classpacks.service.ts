@@ -16,6 +16,10 @@ export class ClasspacksService {
     return this.classpacksRepository.find();
   }
 
+  getClassPack(id: string) {
+    return this.classpacksRepository.findOneBy({ pack_id: id });
+  }
+
   createClassPack(
     createClassPackDto: CreateClassPackDto,
     user: User,

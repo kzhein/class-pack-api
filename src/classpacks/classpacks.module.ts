@@ -9,5 +9,6 @@ import { ClasspacksService } from './classpacks.service';
   imports: [TypeOrmModule.forFeature([ClassPack]), AuthModule],
   controllers: [ClasspacksController],
   providers: [ClasspacksService],
+  exports: [ClasspacksService],
 })
 export class ClasspacksModule {}

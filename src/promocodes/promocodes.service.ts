@@ -12,6 +12,10 @@ export class PromoCodesService {
     private promoCodesRepository: Repository<PromoCode>,
   ) {}
 
+  getPromoCode(name: string) {
+    return this.promoCodesRepository.findOneBy({ name });
+  }
+
   async createPromoCode(createPromoCodeDto: CreatePromoCodeDto, user: User) {
     try {
       const promocode = this.promoCodesRepository.create({

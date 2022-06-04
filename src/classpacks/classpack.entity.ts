@@ -1,5 +1,12 @@
 import { User } from 'src/auth/user.entity';
-import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
+import { Order } from 'src/orders/order.entity';
+import {
+  Column,
+  Entity,
+  ManyToOne,
+  OneToMany,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
 
 export enum PackType {
   UNLIMITED = 'unlimited',
@@ -53,4 +60,7 @@ export class ClassPack {
 
   @ManyToOne(() => User, (user) => user.classPacks)
   createdBy: User;
+
+  @OneToMany(() => Order, (order) => order.classPack)
+  orders: Order[];
 }
