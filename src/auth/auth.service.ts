@@ -1,4 +1,8 @@
-import { ConflictException, Injectable } from '@nestjs/common';
+import {
+  ConflictException,
+  Injectable,
+  UnauthorizedException,
+} from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
@@ -37,6 +41,22 @@ export class AuthService {
       } else {
         throw error;
       }
+    }
+  }
+
+  async signIn(authCredentialsDto: AuthCredentialsDto) {
+    const { email, password } = authCredentialsDto;
+    const user = await this.usersRepository.findOne({
+      where: { email },
+      select: ['id', 'email', 'password', 'isAdmin', 'tier'],
+    });
+
+    if (user && (await bcrypt.compare(password, user.password))) {
+      user.password = undefined;
+      const token = await this.jwtService.sign({ id: user.id });
+      return { user, token };
+    } else {
+      throw new UnauthorizedException('Please check your login credentials');
     }
   }
 }
