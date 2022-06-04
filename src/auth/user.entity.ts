@@ -1,3 +1,4 @@
+import { ClassPack } from 'src/classpacks/classpack.entity';
 import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity()
@@ -16,4 +17,7 @@ export class User {
 
   @Column({ default: 'newbie' })
   tier: string;
+
+  @OneToMany(() => ClassPack, (classPack) => classPack.createdBy)
+  classPacks: ClassPack[];
 }

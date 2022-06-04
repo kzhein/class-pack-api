@@ -1,4 +1,5 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { User } from 'src/auth/user.entity';
+import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
 
 export enum PackType {
   UNLIMITED = 'unlimited',
@@ -49,4 +50,7 @@ export class ClassPack {
 
   @Column()
   estimate_price: number;
+
+  @ManyToOne(() => User, (user) => user.classPacks)
+  createdBy: User;
 }
