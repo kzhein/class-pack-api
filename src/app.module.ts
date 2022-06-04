@@ -1,7 +1,9 @@
 import { Module } from '@nestjs/common';
-import { ClasspacksModule } from './classpacks/classpacks.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { AuthModule } from './auth/auth.module';
+import { User } from './auth/user.entity';
 import { ClassPack } from './classpacks/classpack.entity';
+import { ClasspacksModule } from './classpacks/classpacks.module';
 
 @Module({
   imports: [
@@ -12,10 +14,11 @@ import { ClassPack } from './classpacks/classpack.entity';
       username: 'root',
       password: '',
       database: 'classpack',
-      entities: [ClassPack],
+      entities: [ClassPack, User],
       synchronize: true,
     }),
     ClasspacksModule,
+    AuthModule,
   ],
   controllers: [],
   providers: [],
