@@ -1,4 +1,5 @@
 import { ClassPack } from 'src/classpacks/classpack.entity';
+import { PromoCode } from 'src/promocodes/promocode.entity';
 import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity()
@@ -20,4 +21,7 @@ export class User {
 
   @OneToMany(() => ClassPack, (classPack) => classPack.createdBy)
   classPacks: ClassPack[];
+
+  @OneToMany(() => PromoCode, (promoCode) => promoCode.createdBy)
+  promoCodes: PromoCode[];
 }

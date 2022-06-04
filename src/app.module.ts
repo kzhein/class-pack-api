@@ -4,6 +4,8 @@ import { AuthModule } from './auth/auth.module';
 import { User } from './auth/user.entity';
 import { ClassPack } from './classpacks/classpack.entity';
 import { ClasspacksModule } from './classpacks/classpacks.module';
+import { PromoCode } from './promocodes/promocode.entity';
+import { PromocodesModule } from './promocodes/promocodes.module';
 
 @Module({
   imports: [
@@ -14,11 +16,12 @@ import { ClasspacksModule } from './classpacks/classpacks.module';
       username: 'root',
       password: '',
       database: 'classpack',
-      entities: [ClassPack, User],
+      entities: [ClassPack, User, PromoCode],
       synchronize: true,
     }),
     ClasspacksModule,
     AuthModule,
+    PromocodesModule,
   ],
   controllers: [],
   providers: [],
