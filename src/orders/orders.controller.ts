@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Post, UseGuards } from '@nestjs/common';
+import { Body, Controller, Get, Logger, Post, UseGuards } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 import { GetUser } from 'src/auth/get-user.decorator';
 import { User } from 'src/auth/user.entity';
@@ -8,6 +8,8 @@ import { OrdersService } from './orders.service';
 @Controller('api/orders')
 @UseGuards(AuthGuard())
 export class OrdersController {
+  private logger = new Logger('OrdersController');
+
   constructor(private ordersService: OrdersService) {}
 
   @Get()
@@ -31,6 +33,8 @@ export class OrdersController {
     @GetUser() user: User,
   ) {
     const order = await this.ordersService.createOrder(createOrderDto, user);
+
+    this.logger.log(`Order created - ${order.id}`);
 
     return {
       errorCode: 0,

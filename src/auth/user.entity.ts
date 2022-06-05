@@ -21,9 +21,6 @@ export class User {
   @Column({ select: false })
   password: string;
 
-  @Column({ default: false })
-  isAdmin: boolean;
-
   @Column({ default: 'newbie' })
   tier: string;
 

@@ -48,7 +48,7 @@ export class AuthService {
     const { email, password } = authCredentialsDto;
     const user = await this.usersRepository.findOne({
       where: { email },
-      select: ['id', 'email', 'password', 'isAdmin', 'tier'],
+      select: ['id', 'email', 'password', 'tier'],
     });
 
     if (user && (await bcrypt.compare(password, user.password))) {

@@ -1,6 +1,5 @@
-import { Body, Controller, Get, Post, UseGuards } from '@nestjs/common';
+import { Body, Controller, Get, Logger, Post, UseGuards } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
-import { AdminGuard } from 'src/auth/admin.guard';
 import { GetUser } from 'src/auth/get-user.decorator';
 import { User } from 'src/auth/user.entity';
 import { ClasspacksService } from './classpacks.service';
@@ -9,6 +8,8 @@ import { CreateClassPackDto } from './dto/create-classpack.dto';
 @Controller('api/classpacks')
 @UseGuards(AuthGuard())
 export class ClasspacksController {
+  private logger = new Logger('ClasspacksController');
+
   constructor(private classpacksService: ClasspacksService) {}
 
   @Get()
@@ -29,7 +30,6 @@ export class ClasspacksController {
   }
 
   @Post()
-  @UseGuards(AdminGuard)
   async createClassPack(
     @Body() createClassPackDto: CreateClassPackDto,
     @GetUser() user: User,
@@ -38,6 +38,8 @@ export class ClasspacksController {
       createClassPackDto,
       user,
     );
+
+    this.logger.log(`Class Pack created - ${classPack.pack_id}`);
 
     return {
       errorCode: 0,
