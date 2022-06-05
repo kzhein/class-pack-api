@@ -7,12 +7,30 @@ export class AuthController {
   constructor(private authService: AuthService) {}
 
   @Post('/signup')
-  signUp(@Body() authCredentialsDto: AuthCredentialsDto) {
-    return this.authService.signUp(authCredentialsDto);
+  async signUp(@Body() authCredentialsDto: AuthCredentialsDto) {
+    const { token, user } = await this.authService.signUp(authCredentialsDto);
+
+    return {
+      errorCode: 0,
+      message: 'Success',
+      data: {
+        token,
+        user,
+      },
+    };
   }
 
   @Post('/signin')
-  signIn(@Body() authCredentialsDto: AuthCredentialsDto) {
-    return this.authService.signIn(authCredentialsDto);
+  async signIn(@Body() authCredentialsDto: AuthCredentialsDto) {
+    const { token, user } = await this.authService.signIn(authCredentialsDto);
+
+    return {
+      errorCode: 0,
+      message: 'Success',
+      data: {
+        token,
+        user,
+      },
+    };
   }
 }

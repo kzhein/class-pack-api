@@ -11,12 +11,33 @@ export class OrdersController {
   constructor(private ordersService: OrdersService) {}
 
   @Get()
-  getOrders(@GetUser() user: User) {
-    return this.ordersService.getOrders(user);
+  async getOrders(@GetUser() user: User) {
+    const orders = await this.ordersService.getOrders(user);
+
+    return {
+      errorCode: 0,
+      message: 'Success',
+      data: {
+        total_item: orders.length,
+        total_page: 1,
+        orders,
+      },
+    };
   }
 
   @Post()
-  createOrder(@Body() createOrderDto: CreateOrderDto, @GetUser() user: User) {
-    return this.ordersService.createOrder(createOrderDto, user);
+  async createOrder(
+    @Body() createOrderDto: CreateOrderDto,
+    @GetUser() user: User,
+  ) {
+    const order = await this.ordersService.createOrder(createOrderDto, user);
+
+    return {
+      errorCode: 0,
+      message: 'Success',
+      data: {
+        order,
+      },
+    };
   }
 }

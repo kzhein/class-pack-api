@@ -12,10 +12,21 @@ export class PromoCodesController {
   constructor(private promoCodesService: PromoCodesService) {}
 
   @Post()
-  createPromoCode(
+  async createPromoCode(
     @Body() createPromoCodeDto: CreatePromoCodeDto,
     @GetUser() user: User,
   ) {
-    return this.promoCodesService.createPromoCode(createPromoCodeDto, user);
+    const promoCode = await this.promoCodesService.createPromoCode(
+      createPromoCodeDto,
+      user,
+    );
+
+    return {
+      errorCode: 0,
+      message: 'Success',
+      data: {
+        promoCode,
+      },
+    };
   }
 }
